@@ -1,3 +1,6 @@
+# raspberry pi image
+*.xz
+
 # Prerequisites
 *.d
 
