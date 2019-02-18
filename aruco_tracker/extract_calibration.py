@@ -1,3 +1,8 @@
+'''
+Grab the existing calibration data from the yaml file
+to run before aruco_tracker
+'''
+
 import cv2
 
 # FILE_STORAGE_READ
