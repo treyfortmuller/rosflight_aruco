@@ -1,13 +1,16 @@
+'''
+calibrate a camera using a directory of images including the 
+calibration checkerboard, write the calibration to a yaml file
+'''
+
 import numpy as np
 import cv2
 import glob
-
 
 WAIT_TIME = 250 # time to view the rendered image (milliseconds)
 
 # note checkerboard dimensions are counted by the block intersections
 # not the blocks themselves
-
 CHECKER_DIM = [9, 6] # dimensions of the checkerboard
 
 # termination criteria
@@ -64,12 +67,13 @@ with open(fname, "w") as f:
 print("Calibration Successful ! Written values to a file !")
 """
 
-cv_file = cv2.FileStorage("calib_images/test.yaml", cv2.FILE_STORAGE_WRITE)
-
-print("Wrote calibration to file.")
+cv_file = cv2.FileStorage("calib_images/calibration.yaml", cv2.FILE_STORAGE_WRITE)
 
 cv_file.write("camera_matrix", mtx)
 cv_file.write("dist_coeff", dist)
+
+print("Wrote calibration to file.")
+
 # note you *release* you don't close() a FileStorage object
 cv_file.release()
 
