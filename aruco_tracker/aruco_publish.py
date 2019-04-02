@@ -11,11 +11,13 @@ import glob
 import extract_calibration # get existing calibration information
 
 import rospy
+import std_msgs.msg # for Header in the stamped point
 from geometry_msgs.msg import Point
+from geometry_msgs.msg import PointStamped # includes a Header
 
 # setup ros node and publisher, for a point in space for now
 rospy.init_node('quad_cam', anonymous=True)
-point_pub = rospy.Publisher('cam_point', Point, queue_size = 10)
+point_pub = rospy.Publisher('cam_point', PointStamped, queue_size = 10)
 
 loop_rate = 30 # 30 frames per second
 rate = rospy.Rate(loop_rate)
@@ -69,8 +71,14 @@ def aruco_tracker():
             # draw the ID of the makers visible in the frame
             cv2.putText(frame, "Id: " + str(ids), (0,64), font, 1, (0,255,0),2,cv2.LINE_AA)
 
-        # publish the translation vector points
-        point_pub.publish( Point(translation[0], translation[1], translation[2]) )
+        # publish the stamped point
+        p = Point(translation[0], translation[1], translation[2])
+
+        h = std_msgs.msg.Header()
+        h.stamp = rospy.Time.now()
+        h.frame_id = 'map'
+
+        point_pub.publish(h, p)
 
         rate.sleep() # wait for the amount of time required to achieve the publish rate
 
