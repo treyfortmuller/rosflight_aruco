@@ -35,13 +35,13 @@ while (True):
         # returns the rotation and translation vectors for each of the markers in corners[]
         rvec, tvec,_ = aruco.estimatePoseSingleMarkers(corners[0], 0.085, mtx, dist)
 
-        # print the rotation and translation vectors
+        # PRINT TRANSLATION VECTOR
         print(tvec[0][0]) # why is x never positive?
-        # print(rvec[0][0]) # not sure why these are nested twice...
 
         # calculate the rotation matrix from the axis-angle rotation vector
         rmat, _ = cv2.Rodrigues(rvec)
 
+        # PRINT ROTATION MATRIX
         print(rmat)
         print("\n")
 
